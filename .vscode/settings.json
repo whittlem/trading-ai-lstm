@@ -1,0 +1,15 @@
+{
+  "python.formatting.provider": "none",
+  "python.formatting.blackArgs": ["--line-length", "160"],
+  "python.linting.flake8Args": [
+    "--max-line-length=160",
+    "--ignore=E203,E266,E501,W503,F403,F401,C901"
+  ],
+  "python.analysis.diagnosticSeverityOverrides": {
+    "reportUnusedImport": "information",
+    "reportMissingImports": "none"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  }
+}
