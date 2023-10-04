@@ -5,6 +5,7 @@ import pickle
 import pandas as pd
 import numpy as np
 from dotenv import load_dotenv
+from sklearn.metrics import mean_squared_error, mean_absolute_error
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, Dense, Dropout
 from tensorflow.keras.models import load_model
@@ -163,6 +164,17 @@ def predict_next_close(df: pd.DataFrame = None, scaler: MinMaxScaler = None) -> 
     # Perform the inverse transformation to get the future price on the original scale
     return scaler.inverse_transform(zero_filled_matrix)[0, 3]
 
+def evaluate_model(x_test: list = []) -> None:
+    # Evaluate the model
+    y_pred = model.predict(x_test)
+    mse = mean_squared_error(y_test, y_pred)
+    mae = mean_absolute_error(y_test, y_pred)
+    rmse = np.sqrt(mse)
+
+    print(f"Mean Squared Error: {mse}")
+    print(f"Mean Absolute Error: {mae}")
+    print(f"Root Mean Squared Error: {rmse}")
+
 if __name__ == "__main__":
     # Retrieve 3369 days of S&P 500 data
     df = get_ohlc_data(use_cache=True)
@@ -185,6 +197,9 @@ if __name__ == "__main__":
     x_test = np.reshape(x_test, (x_test.shape[0], seq_length, 5))  # 5 features
 
     model = get_lstm_model(use_cache=True)
+
+    # Evaluate the model
+    evaluate_model(x_test)
 
     predicted_x_test_close_prices = get_predicted_x_test_prices(x_test)
     print("Predicted close prices:", predicted_x_test_close_prices)
