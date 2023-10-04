@@ -144,7 +144,7 @@ def plot_x_test_actual_vs_predicted(actual_close_prices: list = [], predicted_x_
     plt.show()
 
 def predict_next_close(df: pd.DataFrame = None, scaler: MinMaxScaler = None) -> float:
-    # Take the last 20 days of data and scale it
+    # Take the last X days of data and scale it
     last_x_days = df.iloc[-seq_length:][["open", "high", "low", "close", "volume"]].values
     last_x_days_scaled = scaler.transform(last_x_days)
 
