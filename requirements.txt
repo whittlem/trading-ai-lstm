@@ -1,0 +1,8 @@
+pandas
+numpy
+scikit-learn
+scipy
+matplotlib
+tensorflow
+eodhd
+python-dotenv
