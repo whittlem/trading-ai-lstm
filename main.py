@@ -145,14 +145,14 @@ def plot_x_test_actual_vs_predicted(actual_close_prices: list = [], predicted_x_
 
 def predict_next_close(df: pd.DataFrame = None, scaler: MinMaxScaler = None) -> float:
     # Take the last 20 days of data and scale it
-    last_20_days = df.iloc[-20:][["open", "high", "low", "close", "volume"]].values
-    last_20_days_scaled = scaler.transform(last_20_days)
+    last_x_days = df.iloc[-seq_length:][["open", "high", "low", "close", "volume"]].values
+    last_x_days_scaled = scaler.transform(last_x_days)
 
     # Reshape this data to be a single sequence and make the prediction
-    last_20_days_scaled = np.reshape(last_20_days_scaled, (1, seq_length, 5))
+    last_x_days_scaled = np.reshape(last_x_days_scaled, (1, seq_length, 5))
 
     # Predict the future close price
-    future_close_price = model.predict(last_20_days_scaled)
+    future_close_price = model.predict(last_x_days_scaled)
 
     # Create a zero-filled matrix for the inverse transformation
     zero_filled_matrix = np.zeros((1, 5))
